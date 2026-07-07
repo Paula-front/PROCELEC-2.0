@@ -1,0 +1,65 @@
+@import './variables.css';
+@import './reset.css';
+@import './animations.css';
+@import './components.css';
+@import './utilities.css';
+
+/* ==========================
+   Estilos globales
+========================== */
+
+body {
+  overflow-x: hidden;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* ==========================
+   Contenedor principal
+========================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ==========================
+   Secciones
+========================== */
+
+.section {
+  padding: var(--section-padding);
+}
+
+/* ==========================
+   Títulos
+========================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  color: var(--color-dark);
+  line-height: 1.2;
+}
+
+p {
+  line-height: 1.7;
+  color: var(--color-gray);
+}
+
+/* ==========================
+   Selección de texto
+========================== */
+
+::selection {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
