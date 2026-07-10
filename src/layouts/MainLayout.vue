@@ -26,6 +26,5 @@ import Footer from '../components/layout/Footer.vue'
 
 .main-layout__content {
   flex: 1;
-  padding-top: var(--navbar-height);
 }
 </style>

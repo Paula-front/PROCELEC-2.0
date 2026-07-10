@@ -1,7 +1,7 @@
 <template>
-  <section class="section">
+  <section class="page-placeholder section">
     <div class="container">
-      <h1>Contacto</h1>
+      <h1>Servicios</h1>
       <p>Página en construcción.</p>
     </div>
   </section>
@@ -9,3 +9,9 @@
 
 <script setup>
 </script>
+
+<style scoped>
+.page-placeholder {
+  padding-top: 11rem;
+}
+</style>

@@ -1,3 +1,19 @@
+/* =====================================================
+   PROCELEC 2.0
+   UTILIDADES GLOBALES
+===================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section {
+  padding: var(--section-padding);
+}
+
 .text-center {
   text-align: center;
 }
@@ -10,6 +26,10 @@
   color: var(--color-primary);
 }
 
+.text-white {
+  color: var(--color-white);
+}
+
 .bg-light {
   background-color: var(--color-light);
 }
@@ -18,48 +38,6 @@
   background-color: var(--color-dark);
 }
 
-.mt-sm {
-  margin-top: 1rem;
-}
-
-.mt-md {
-  margin-top: 2rem;
-}
-
-.mt-lg {
-  margin-top: 3rem;
-}
-
-.mb-sm {
-  margin-bottom: 1rem;
-}
-
-.mb-md {
-  margin-bottom: 2rem;
-}
-
-.mb-lg {
-  margin-bottom: 3rem;
-}
-
 .fade-in {
   animation: fadeIn 0.8s ease forwards;
-}
-
-.hidden-mobile {
-  display: block;
-}
-
-.visible-mobile {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .hidden-mobile {
-    display: none;
-  }
-
-  .visible-mobile {
-    display: block;
-  }
 }

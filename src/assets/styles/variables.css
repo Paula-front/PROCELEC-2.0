@@ -1,37 +1,82 @@
 :root {
-  /* Colores principales */
-  --color-primary: #0057b8;
-  --color-primary-dark: #003b7a;
-  --color-primary-light: #2f80ed;
+  /* ==========================
+     Marca PROCELEC
+  ========================== */
 
-  /* Colores secundarios */
-  --color-dark: #0b1220;
-  --color-dark-soft: #111827;
+  --color-primary: #0099ff;
+  --color-primary-dark: #006bb8;
+  --color-primary-light: #63d8ff;
+  --color-primary-soft: rgba(0, 153, 255, 0.12);
+
+  /* ==========================
+     Fondos corporativos
+  ========================== */
+
+  --color-dark: #030811;
+  --color-dark-soft: #07111f;
+  --color-dark-card: #0d1a2b;
+  --color-dark-border: rgba(255, 255, 255, 0.12);
+
   --color-white: #ffffff;
-  --color-light: #f5f7fb;
-  --color-gray: #6b7280;
-  --color-gray-light: #e5e7eb;
+  --color-light: #eef5fb;
+  --color-light-soft: #f7fbff;
 
-  /* Efectos */
-  --color-glow: rgba(47, 128, 237, 0.35);
-  --shadow-soft: 0 12px 35px rgba(15, 23, 42, 0.12);
-  --shadow-card: 0 18px 45px rgba(15, 23, 42, 0.1);
+  /* ==========================
+     Textos
+  ========================== */
 
-  /* Tipografía */
+  --color-text: #07111f;
+  --color-text-soft: #1e293b;
+  --color-gray: #64748b;
+  --color-gray-light: #dbe7f3;
+
+  /* ==========================
+     Efectos
+  ========================== */
+
+  --color-glow: rgba(0, 153, 255, 0.35);
+  --color-glow-strong: rgba(0, 153, 255, 0.55);
+
+  --shadow-soft: 0 16px 40px rgba(3, 8, 17, 0.14);
+  --shadow-card: 0 24px 60px rgba(3, 8, 17, 0.18);
+  --shadow-dark: 0 24px 70px rgba(0, 0, 0, 0.35);
+
+  /* ==========================
+     Tipografía
+  ========================== */
+
   --font-primary: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-heading: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-  /* Medidas */
+  /* ==========================
+     Contenedores
+  ========================== */
+
   --container-width: 1180px;
   --section-padding: 6rem 1.5rem;
-  --border-radius: 1.25rem;
-  --border-radius-sm: 0.75rem;
 
-  /* Transiciones */
+  /* ==========================
+     Radios
+  ========================== */
+
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.75rem;
+  --radius-md: 1.25rem;
+  --radius-lg: 1.75rem;
+  --radius-xl: 2.25rem;
+  --radius-full: 999px;
+
+  /* ==========================
+     Transiciones
+  ========================== */
+
   --transition-fast: 180ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 400ms ease;
 
-  /* Navbar */
+  /* ==========================
+     Layout
+  ========================== */
+
   --navbar-height: 76px;
 }
