@@ -1,22 +1,54 @@
 <template>
   <header
     class="navbar"
-    :class="{ 'navbar--scrolled': isScrolled, 'navbar--open': isMobileMenuOpen }"
+    :class="{
+      'navbar--scrolled': isScrolled,
+      'navbar--open': isMobileMenuOpen,
+    }"
   >
     <div class="navbar__shell">
-      <RouterLink to="/" class="navbar__logo" aria-label="Ir al inicio de PROCELEC">
-        <img :src="logoBlanco" alt="PROCELEC" />
+      <RouterLink
+        to="/"
+        class="navbar__logo"
+        aria-label="Ir al inicio de PROCELEC"
+        @click="closeMobileMenu"
+      >
+        <img
+          :src="logoBlanco"
+          alt="PROCELEC"
+        />
       </RouterLink>
 
-      <nav class="navbar__nav" aria-label="Navegación principal">
-        <RouterLink to="/">Inicio</RouterLink>
-        <RouterLink to="/servicios">Servicios</RouterLink>
-        <RouterLink to="/proyectos">Proyectos</RouterLink>
-        <RouterLink to="/quienes-somos">Empresa</RouterLink>
-        <RouterLink to="/contacto">Contacto</RouterLink>
+      <nav
+        class="navbar__nav"
+        aria-label="Navegación principal"
+      >
+        <RouterLink to="/">
+          Inicio
+        </RouterLink>
+
+        <RouterLink to="/servicios">
+          Servicios
+        </RouterLink>
+
+        <RouterLink to="/proyectos">
+          Proyectos
+        </RouterLink>
+
+        <RouterLink to="/quienes-somos">
+          Empresa
+        </RouterLink>
+
+        <RouterLink to="/contacto">
+          Contacto
+        </RouterLink>
       </nav>
 
-      <RouterLink to="/contacto" class="navbar__cta">
+      <RouterLink
+        to="/contacto#formulario-contacto"
+        class="navbar__cta"
+        @click="closeMobileMenu"
+      >
         Contactar
       </RouterLink>
 
@@ -24,7 +56,12 @@
         class="navbar__toggle"
         type="button"
         :aria-expanded="isMobileMenuOpen"
-        aria-label="Abrir o cerrar menú"
+        :aria-label="
+          isMobileMenuOpen
+            ? 'Cerrar menú de navegación'
+            : 'Abrir menú de navegación'
+        "
+        aria-controls="mobile-navigation"
         @click="toggleMobileMenu"
       >
         <span></span>
@@ -32,20 +69,76 @@
       </button>
     </div>
 
-    <div class="navbar__mobile" v-if="isMobileMenuOpen">
-      <RouterLink to="/" @click="closeMobileMenu">Inicio</RouterLink>
-      <RouterLink to="/servicios" @click="closeMobileMenu">Servicios</RouterLink>
-      <RouterLink to="/proyectos" @click="closeMobileMenu">Proyectos</RouterLink>
-      <RouterLink to="/quienes-somos" @click="closeMobileMenu">Empresa</RouterLink>
-      <RouterLink to="/contacto" @click="closeMobileMenu">Contacto</RouterLink>
-    </div>
+    <Transition name="mobile-menu">
+      <nav
+        v-if="isMobileMenuOpen"
+        id="mobile-navigation"
+        class="navbar__mobile"
+        aria-label="Navegación móvil"
+      >
+        <RouterLink
+          to="/"
+          @click="closeMobileMenu"
+        >
+          Inicio
+        </RouterLink>
+
+        <RouterLink
+          to="/servicios"
+          @click="closeMobileMenu"
+        >
+          Servicios
+        </RouterLink>
+
+        <RouterLink
+          to="/proyectos"
+          @click="closeMobileMenu"
+        >
+          Proyectos
+        </RouterLink>
+
+        <RouterLink
+          to="/quienes-somos"
+          @click="closeMobileMenu"
+        >
+          Empresa
+        </RouterLink>
+
+        <RouterLink
+          to="/contacto"
+          @click="closeMobileMenu"
+        >
+          Contacto
+        </RouterLink>
+
+        <RouterLink
+          to="/contacto#formulario-contacto"
+          class="navbar__mobile-cta"
+          @click="closeMobileMenu"
+        >
+          Contactar
+        </RouterLink>
+      </nav>
+    </Transition>
   </header>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { RouterLink } from 'vue-router'
+import {
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  watch,
+} from 'vue'
+
+import {
+  RouterLink,
+  useRoute,
+} from 'vue-router'
+
 import logoBlanco from '../../assets/logos/logoblanco.png'
+
+const route = useRoute()
 
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
@@ -62,13 +155,38 @@ const closeMobileMenu = () => {
   isMobileMenuOpen.value = false
 }
 
+const handleEscapeKey = (event) => {
+  if (event.key === 'Escape') {
+    closeMobileMenu()
+  }
+}
+
+watch(isMobileMenuOpen, (isOpen) => {
+  document.body.style.overflow = isOpen ? 'hidden' : ''
+})
+
+watch(
+  () => route.fullPath,
+  () => {
+    closeMobileMenu()
+  },
+)
+
 onMounted(() => {
   handleScroll()
-  window.addEventListener('scroll', handleScroll)
+
+  window.addEventListener('scroll', handleScroll, {
+    passive: true,
+  })
+
+  window.addEventListener('keydown', handleEscapeKey)
 })
 
 onBeforeUnmount(() => {
+  document.body.style.overflow = ''
+
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('keydown', handleEscapeKey)
 })
 </script>
 
@@ -80,7 +198,9 @@ onBeforeUnmount(() => {
   z-index: 100;
   width: 100%;
   padding: 0 1.5rem;
-  transition: all var(--transition-base);
+  transition:
+    top var(--transition-base),
+    padding var(--transition-base);
 }
 
 .navbar__shell {
@@ -97,12 +217,17 @@ onBeforeUnmount(() => {
   background: rgba(3, 8, 17, 0.38);
   backdrop-filter: blur(18px);
   box-shadow: 0 18px 55px rgba(0, 0, 0, 0.24);
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .navbar--scrolled .navbar__shell,
 .navbar--open .navbar__shell {
-  background: rgba(3, 8, 17, 0.88);
   border-color: rgba(99, 216, 255, 0.18);
+  background: rgba(3, 8, 17, 0.9);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.34);
 }
 
 .navbar__logo {
@@ -112,6 +237,7 @@ onBeforeUnmount(() => {
 }
 
 .navbar__logo img {
+  display: block;
   width: 124px;
   height: auto;
 }
@@ -154,16 +280,22 @@ onBeforeUnmount(() => {
 }
 
 .navbar__cta {
+  min-height: 42px;
+  padding: 0 1.15rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
-  padding: 0 1.15rem;
+  flex-shrink: 0;
   border-radius: var(--radius-full);
   font-size: 0.88rem;
   font-weight: 800;
   color: var(--color-white);
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  background:
+    linear-gradient(
+      135deg,
+      var(--color-primary),
+      var(--color-primary-dark)
+    );
   box-shadow: 0 14px 32px var(--color-glow);
   transition:
     transform var(--transition-base),
@@ -180,6 +312,7 @@ onBeforeUnmount(() => {
   width: 44px;
   height: 44px;
   margin-left: auto;
+  flex-shrink: 0;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
 }
@@ -191,7 +324,9 @@ onBeforeUnmount(() => {
   margin: 5px auto;
   border-radius: var(--radius-full);
   background: var(--color-white);
-  transition: transform var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
 }
 
 .navbar--open .navbar__toggle span:first-child {
@@ -204,13 +339,15 @@ onBeforeUnmount(() => {
 
 .navbar__mobile {
   width: min(100%, var(--container-width));
+  max-height: calc(100vh - 7.5rem);
   margin: 0.75rem auto 0;
   padding: 1rem;
   display: grid;
   gap: 0.25rem;
+  overflow-y: auto;
   border: 1px solid rgba(99, 216, 255, 0.18);
   border-radius: var(--radius-lg);
-  background: rgba(3, 8, 17, 0.94);
+  background: rgba(3, 8, 17, 0.96);
   backdrop-filter: blur(18px);
   box-shadow: var(--shadow-dark);
 }
@@ -220,12 +357,41 @@ onBeforeUnmount(() => {
   border-radius: var(--radius-sm);
   font-weight: 700;
   color: rgba(255, 255, 255, 0.82);
+  transition:
+    color var(--transition-base),
+    background var(--transition-base);
 }
 
 .navbar__mobile a.router-link-active,
 .navbar__mobile a:hover {
   color: var(--color-white);
   background: rgba(0, 153, 255, 0.12);
+}
+
+.navbar__mobile-cta {
+  margin-top: 0.5rem;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-white) !important;
+  background:
+    linear-gradient(
+      135deg,
+      var(--color-primary),
+      var(--color-primary-dark)
+    ) !important;
+}
+
+.mobile-menu-enter-active,
+.mobile-menu-leave-active {
+  transition:
+    opacity var(--transition-base),
+    transform var(--transition-base);
+}
+
+.mobile-menu-enter-from,
+.mobile-menu-leave-to {
+  opacity: 0;
+  transform: translateY(-0.75rem);
 }
 
 @media (max-width: 920px) {
@@ -252,6 +418,24 @@ onBeforeUnmount(() => {
 
   .navbar__logo img {
     width: 108px;
+  }
+
+  .navbar__mobile {
+    max-height: calc(100vh - 6.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navbar__shell,
+  .navbar__nav a,
+  .navbar__nav a::after,
+  .navbar__cta,
+  .navbar__toggle span,
+  .navbar__mobile a,
+  .mobile-menu-enter-active,
+  .mobile-menu-leave-active {
+    transition: none;
   }
 }
 </style>

@@ -1,17 +1,13 @@
 <template>
-  <section class="page-placeholder section">
-    <div class="container">
-      <h1>Servicios</h1>
-      <p>Página en construcción.</p>
-    </div>
-  </section>
+  <main>
+    <ProjectsHero />
+    <ProjectsGrid />
+    <AboutCTA />
+  </main>
 </template>
 
 <script setup>
+import ProjectsHero from '../components/projects/ProjectsHero.vue'
+import ProjectsGrid from '../components/projects/ProjectsGrid.vue'
+import AboutCTA from '../components/about/AboutCTA.vue'
 </script>
-
-<style scoped>
-.page-placeholder {
-  padding-top: 11rem;
-}
-</style>

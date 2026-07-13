@@ -29,7 +29,7 @@ const routes = [
     name: 'services',
     component: ServicesView,
     meta: {
-      title: 'Servicios | PROCELEC',
+      title: 'Servicios eléctricos BT y MT | PROCELEC',
     },
   },
   {
@@ -37,7 +37,7 @@ const routes = [
     name: 'projects',
     component: ProjectsView,
     meta: {
-      title: 'Proyectos | PROCELEC',
+      title: 'Proyectos eléctricos ejecutados | PROCELEC',
     },
   },
   {
@@ -61,8 +61,27 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior() {
-    return { top: 0 }
+
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+
+    if (to.hash) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            el: to.hash,
+            behavior: 'smooth',
+          })
+        }, 100)
+      })
+    }
+
+    return {
+      top: 0,
+      behavior: 'smooth',
+    }
   },
 })
 
